@@ -32,7 +32,7 @@ class Grade(db.Model):
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
     subject = db.Column(db.String(20), nullable=False)
     score = db.Column(db.Integer)
-    weight = db.Column(db.Float, default=1.0)  # 添加 weight 屬性，默認為 1.0
+    wqeight = db.Column(db.Float, default=1.0)  # 添加 weight 屬性，默認為 1.0
 
 class Leave(db.Model):
     id = db.Column(db.Integer, primary_key=True)
