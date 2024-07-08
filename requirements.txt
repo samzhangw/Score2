@@ -4,4 +4,4 @@ Werkzeug==2.0.2
 bcrypt==3.2.0
 Flask-SQLAlchemy==2.5.1
 SQLAlchemy==1.4.22
-reportlab
+reportlab==3.6.4
