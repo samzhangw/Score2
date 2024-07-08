@@ -40,7 +40,8 @@ class Leave(db.Model):
     date = db.Column(db.String(20), nullable=False)
     reason = db.Column(db.String(100), nullable=False)
     status = db.Column(db.String(20), default='pending')
-    weight = db.Column(db.Float, nullable=False)  # 這裡定義了權重屬性，存儲科目的加權值
+    weight = db.Column(db.Integer, nullable=True)  # 允許為空或者設置默認值
+
 
 # 創建數據庫表
 with app.app_context():
