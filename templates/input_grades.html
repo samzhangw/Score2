@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>輸入成績系統</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        .subject-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .subject-list li {
+            margin-bottom: 10px;
+        }
+        .subject-list li form {
+            display: inline;
+            margin-left: 10px;
+        }
+        .subject-list li form button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .subject-list li form button:hover {
+            background-color: #d32f2f;
+        }
+        .back-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .submit-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .submit-button:hover {
+            background-color: #45a049;
+        }
+        .form-inline {
+            display: flex;
+            align-items: center;
+        }
+        .form-inline input[type="text"] {
+            flex: 1;
+            padding: 8px;
+        }
+        .form-inline button[type="submit"] {
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+        .form-inline button[type="submit"]:hover {
+            background-color: #005580;
+        }
+    </style>
+</head>
+<body>
+    <h1>成績輸入系統</h1>
+    <form action="/input_grades" method="POST" onsubmit="return confirm('确定提交成绩吗？');">
+        <table>
+            <tr>
+                <th>學生</th>
+                {% for subject in subjects %}
+                    <th>{{ subject }}</th>
+                {% endfor %}
+            </tr>
+            {% for student in students %}
+                <tr>
+                    <td>{{ student.username }}</td>
+                    {% for subject in subjects %}
+                        <td><input type="number" name="{{ student.id }}_{{ subject }}" value=""></td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        <div>
+            <button type="submit" class="submit-button">提交成绩</button>
+        </div>
+    </form>
+
+    <div>
+        <h2>管理科目</h2>
+        <form class="form-inline" action="/add_subject" method="POST">
+            <input type="text" name="new_subject" placeholder="新增科目" required>
+            <button type="submit">新增科目</button>
+        </form>
+
+        <ul class="subject-list">
+            {% for subject in subjects %}
+                <li>
+                    {{ subject }}
+                    <form action="/delete_subject" method="POST">
+                        <input type="hidden" name="subject_name" value="{{ subject }}">
+                        <button type="submit">刪除</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="back-link">
+        <a href="/dashboard_admin">返回</a>
+    </div>
+</body>
+</html>

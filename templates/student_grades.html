@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ student.username }}的成績</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ student.username }}的成績</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>科目</th>
+                    <th>分數</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for grade in grades %}
+                <tr>
+                    <td>{{ grade.subject }}</td>
+                    <td>{{ grade.score }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/select_student" class="btn btn-primary">返回選擇學生</a>
+    </div>
+</body>
+</html>

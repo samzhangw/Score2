@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學生儀表板</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 50px; /* Adjusted padding for better alignment */
+        }
+        .container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        h1, h2 {
+            color: #343a40;
+        }
+        .btn-primary, .btn-secondary, .btn-info, .btn-danger {
+            margin: 10px 5px; /* Adjusted button margin */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>歡迎, {{ username }}</h1>
+        <a href="/grades" class="btn btn-primary">查看成績</a>
+        <a href="/leave_request" class="btn btn-secondary">申請請假</a>
+        <a href="/leave_history" class="btn btn-info">請假歷史紀錄</a>
+        <a href="/logout" class="btn btn-danger">登出</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!-- set_subject_weights.html -->
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>設定科目權重</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f2f2f2;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            width: 50%;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .current-weights {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f2f2f2;
+            border-radius: 8px;
+        }
+        .current-weights h3 {
+            margin-bottom: 10px;
+        }
+        .current-weights ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .current-weights li {
+            margin-bottom: 5px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #333;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2>設定科目權重</h2>
+    <form action="/set_subject_weights" method="post">
+        {% for subject in subjects %}
+        <label for="{{ subject }}">{{ subject }}</label>
+        <input type="number" id="{{ subject }}" name="{{ subject }}" step="0.1" value="{{ current_weights[subject] }}">
+        <br>
+        {% endfor %}
+        <input type="submit" value="儲存權重">
+    </form>
+
+    <div class="current-weights">
+        <h3>目前設定權重</h3>
+        <ul>
+            {% for subject, weight in current_weights.items() %}
+            <li>{{ subject }}: {{ weight }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <br>
+    <a href="/dashboard_admin">返回主控台</a>
+</body>
+</html>

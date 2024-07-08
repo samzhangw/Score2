@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>請假歷史紀錄</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        h1, h2 {
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+        .list-group-item {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ student.username }} 的請假歷史紀錄</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>已核准的請假</h2>
+                <ul class="list-group">
+                    {% for leave in student.leaves %}
+                    {% if leave.status == 'approved' %}
+                    <li class="list-group-item list-group-item-success">
+                        {{ leave.date }} - {{ leave.reason }}
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h2>尚未核准的請假</h2>
+                <ul class="list-group">
+                    {% for leave in student.leaves %}
+                    {% if leave.status == 'pending' %}
+                    <li class="list-group-item list-group-item-warning">
+                        {{ leave.date }} - {{ leave.reason }}
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <a href="/dashboard_student" class="btn btn-secondary mt-3">返回儀表板</a>
+    </div>
+</body>
+</html>

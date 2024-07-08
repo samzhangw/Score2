@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>請假核准</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>請假核准</h1>
+
+        <h2>待核准請假</h2>
+        <table>
+            <tr>
+                <th>學生</th>
+                <th>日期</th>
+                <th>原因</th>
+                <th>狀態</th>
+                <th>操作</th>
+            </tr>
+            {% for leave in pending_leaves %}
+            <tr>
+                <td>{{ leave.student.username }}</td>
+                <td>{{ leave.date }}</td>
+                <td>{{ leave.reason }}</td>
+                <td>{{ leave.status }}</td>
+                <td>
+                    <form method="POST" action="/approve_leave">
+                        <input type="hidden" name="leave_id" value="{{ leave.id }}">
+                        <button type="submit" class="btn">核准</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h2>已核准請假</h2>
+        <table>
+            <tr>
+                <th>學生</th>
+                <th>日期</th>
+                <th>原因</th>
+                <th>狀態</th>
+            </tr>
+            {% for leave in approved_leaves %}
+            <tr>
+                <td>{{ leave.student.username }}</td>
+                <td>{{ leave.date }}</td>
+                <td>{{ leave.reason }}</td>
+                <td>{{ leave.status }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <a href="/dashboard_admin" class="back-link">返回管理員儀表板</a>
+    </div>
+</body>
+</html>

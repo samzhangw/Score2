@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>設置學生成績查看截止時間</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">設置學生成績查看截止時間</h1>
+
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form action="/set_grade_access_time" method="post">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">學生用戶名</label>
+                        <select class="form-select" id="username" name="username" required>
+                            <option value="">選擇學生用戶名</option>
+                            {% for student in students %}
+                            <option value="{{ student.username }}">{{ student.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3" id="currentAccessTime">
+                        <!-- Display current access time dynamically -->
+                    </div>
+                    <div class="mb-3">
+                        <label for="access_start_time" class="form-label">新的成績查看開始時間</label>
+                        <input type="datetime-local" class="form-control" id="access_start_time" name="access_start_time" required>
+                        <div class="invalid-feedback">
+                            請選擇有效的日期和時間。
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="access_end_time" class="form-label">新的成績查看截止時間</label>
+                        <input type="datetime-local" class="form-control" id="access_end_time" name="access_end_time" required>
+                        <div class="invalid-feedback">
+                            請選擇有效的日期和時間。
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Fetch and display current access time when a student is selected
+            $('#username').change(function() {
+                var username = $(this).val();
+                $.ajax({
+                    type: 'GET',
+                    url: '/get_current_access_time',
+                    data: { username: username },
+                    success: function(response) {
+                        $('#currentAccessTime').html(response);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+
+            // Fetch and display already set access time when page loads
+            var initialUsername = $('#username').val();
+            if (initialUsername) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/get_current_access_time',
+                    data: { username: initialUsername },
+                    success: function(response) {
+                        $('#currentAccessTime').html(response);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+            // Validate datetime-local inputs to prevent past dates
+            $('#access_start_time, #access_end_time').change(function() {
+                var startDatetime = new Date($('#access_start_time').val());
+                var endDatetime = new Date($('#access_end_time').val());
+
+                if (startDatetime >= endDatetime) {
+                    alert('開始時間必須早於截止時間。');
+                    $(this).val('');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

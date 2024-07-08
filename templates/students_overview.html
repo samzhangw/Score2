@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學生概覽</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="mb-4">學生概覽</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">用戶名</th>
+                    {% for subject in subjects %}
+                        <th scope="col">{{ subject }}</th>
+                    {% endfor %}
+                    <th scope="col">成績查看開始時間</th>
+                    <th scope="col">成績查看結束時間</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.username }}</td>
+                    {% for subject in subjects %}
+                        {% set grade = student.grades | selectattr('subject', 'equalto', subject) | first %}
+                        <td>{{ grade.score if grade else 'N/A' }}</td>
+                    {% endfor %}
+                    <td>{{ student.grade_access_start_time.strftime('%Y-%m-%d %H:%M') if student.grade_access_start_time else '未設置' }}</td>
+                    <td>{{ student.grade_access_end_time.strftime('%Y-%m-%d %H:%M') if student.grade_access_end_time else '未設置' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/dashboard_admin" class="btn btn-primary">返回管理員儀表板</a>
+    </div>
+</body>
+</html>

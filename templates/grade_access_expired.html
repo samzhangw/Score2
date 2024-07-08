@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成績查看時間已過期</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #eaeaea;
+            text-align: center;
+            color: #444;
+        }
+
+        h1 {
+            color: #ff6f61;
+        }
+
+        p {
+            margin-top: 20px;
+        }
+
+        .time-info {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            text-align: left;
+            display: inline-block;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logout-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #ff6f61;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 40px;
+            transition: background-color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #e65c50;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .time-info {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>成績查看時間已過期</h1>
+    <p>抱歉，您的成績查看時間已過期。</p>
+    <div class="time-info">
+        {% if student.grade_access_start_time and student.grade_access_end_time %}
+        <div>
+            <p><strong>管理員已設定的開放時間：</strong></p>
+            <p>開始時間：{{ student.grade_access_start_time }}</p>
+            <p>截止時間：{{ student.grade_access_end_time }}</p>
+        </div>
+        {% endif %}
+        <div id="current-time">
+            <p><strong>目前系統時間：</strong></p>
+            <p id="system-time"></p>
+        </div>
+    </div>
+    <a class="logout-button" href="/logout">登出</a>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const currentTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+            document.getElementById('system-time').textContent = currentTime;
+        }
+
+        setInterval(updateTime, 1000);
+        window.onload = updateTime;
+    </script>
+</body>
+</html>

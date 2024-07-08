@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>所有學生查看成績時間</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .student-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .student-card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .student-card h3 {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>所有學生查看成績時間</h1>
+    <div class="student-list">
+        {% for student in students %}
+            <div class="student-card">
+                <h3>{{ student.username }}</h3>
+                {% if student.grade_access_start_time and student.grade_access_end_time %}
+                    <p><strong>開放時間：</strong></p>
+                    <p>開始時間：{{ student.grade_access_start_time }}</p>
+                    <p>截止時間：{{ student.grade_access_end_time }}</p>
+                {% else %}
+                    <p><em>尚未設定</em></p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    <a href="/logout">登出</a>
+</body>
+</html>
