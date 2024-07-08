@@ -6,7 +6,7 @@ from reportlab.pdfgen import canvas
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://db_2_xbic_user:wEDIKSfyBdIvy6FDMTsjz1oGSMtcMjPa@dpg-cq5ugo88fa8c738eet40-a.oregon-postgres.render.com/db_2_xbic'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -41,6 +41,7 @@ class Leave(db.Model):
     reason = db.Column(db.String(100), nullable=False)
     status = db.Column(db.String(20), default='pending')
     weight = db.Column(db.Integer, nullable=True)  # 允許為空或者設置默認值
+
 
 
 # 創建數據庫表
