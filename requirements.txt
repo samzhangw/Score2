@@ -1,7 +1,4 @@
-Flask==2.0.2
+Flask==2.0.1
 Flask-Bcrypt==0.7.1
-Werkzeug==2.0.2
-bcrypt==3.2.0
-Flask-SQLAlchemy==2.5.1
-SQLAlchemy==1.4.22
-reportlab==3.5.68
+Flask-SQLAlchemy==3.0.1
+reportlab==3.6.1
