@@ -40,7 +40,7 @@ class Leave(db.Model):
     date = db.Column(db.String(20), nullable=False)
     reason = db.Column(db.String(100), nullable=False)
     status = db.Column(db.String(20), default='pending')
-    weight = db.Column(db.Integer, default=None)  # or db.Column(db.Integer, default=None)
+    weight = db.Column(db.Integer, nullable=True)  # Allow NULL values for weight
 
 
 
